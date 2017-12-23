@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--                  Add Subject Dialog                  -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/add_subject_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+
+        android:text="@string/create_subject_text_view"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/subject_name_edit_text"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+
+        android:hint="@string/new_subject_name_hint"
+        android:gravity="left"/>
+
+
+</LinearLayout>
