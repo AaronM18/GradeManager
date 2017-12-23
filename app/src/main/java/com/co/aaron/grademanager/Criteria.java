@@ -20,12 +20,12 @@ import java.util.ArrayList;
 public class Criteria {
 
     private String name;
-    private float grade;
+    private float value; //Percentage value
     private ArrayList<Assignment> assignments;
 
-    public Criteria(String name) {
+    public Criteria(String name, float value) {
         this.name = name;
-        this.grade = 0.0f;
+        this.value = value;
         this.assignments = new ArrayList<>();
     }
 
@@ -37,12 +37,12 @@ public class Criteria {
         this.name = name;
     }
 
-    public float getGrade() {
-        return grade;
+    public float getValue() {
+        return value;
     }
 
-    public void setGrade(float grade) {
-        this.grade = grade;
+    public void setValue(float grade) {
+        this.value = grade;
     }
 
     public ArrayList<Assignment> getAssignments() {

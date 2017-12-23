@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void addSubjectButton(View view) {
         /**
-         *Button to add a new subject to the list
+         * Button to add a new subject to the list
          * Creates a dialog from a layout
          * Reads the name input for the new subject
          * If inout is valid adds the element to the list(subjects)
