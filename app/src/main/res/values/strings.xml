@@ -13,4 +13,16 @@
     <!-- Modify Subject-->
     <string name="new_name_subject_edit_text_view">New name</string>
     <string name="modify_subject_title_dialog">Modify Subject</string>
+    <string name="enter_name_toast">Enter a Name</string>
+    <string name="name_changed_toast">Name Changed</string>
+    <string name="subject_deleted_toast">Subject Deleted</string>
+    <string name="delete_button_dialog">Delete</string>
+    <string name="save_button_dialog">Save</string>
+    <string name="create_button_dialog">Create</string>
+    <string name="error_creation_toast">Error: Subject not created</string>
+    <string name="subject_added_toast">Subject Added!</string>
+    <string name="cancel_button_dialog">Cancel</string>
+
+    <!-- Subject detail(activity 2)-->
+
 </resources>

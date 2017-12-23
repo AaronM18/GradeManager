@@ -26,6 +26,7 @@ public class Criteria {
     public Criteria(String name) {
         this.name = name;
         this.grade = 0.0f;
+        this.assignments = new ArrayList<>();
     }
 
     public String getName() {

@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!--                  Subjects Layout                   -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.co.aaron.grademanager.MainActivity"
     android:orientation="vertical"
     android:gravity="center">
 
+    <TextView
+        android:id="@+id/subject_name_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="5dp"
+        android:layout_margin="5dp"
+
+        android:text="Subject Name"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textStyle="bold"/>
+
     <ListView
-        android:id="@+id/subject_list_view"
+        android:id="@+id/criteria_list_view"
 
         android:layout_width="match_parent"
-        android:layout_height="450dp">
+        android:layout_height="400dp">
 
     </ListView>
 
@@ -37,7 +46,7 @@
             android:textColor="#000000"/>
 
         <TextView
-            android:id="@+id/avgf_text_view"
+            android:id="@+id/subject_avg_text_view"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,8 +59,8 @@
             android:textColor="#000000"/>
 
         <Button
-            android:id="@+id/add_subject_button"
-            android:onClick="addSubjectButton"
+            android:id="@+id/add_criteria_button"
+            android:onClick="addCriteriaButton"
 
 
             android:layout_width="wrap_content"
@@ -66,5 +75,8 @@
             android:textSize="18sp"/>
 
     </LinearLayout>
+
+
+
 
 </LinearLayout>

@@ -26,12 +26,14 @@ public class Subject {
     public Subject(String name) {
         this.name = name;
         this.average = 0.0f;
+        this.criterias = new ArrayList<>();
     }
 
     public Subject(String name, Float average) {
         // !!! Only for testing !!!
         this.name = name;
         this.average = average;
+        this.criterias = new ArrayList<>();
     }
 
     public String getName() {

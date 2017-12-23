@@ -2,6 +2,7 @@ package com.co.aaron.grademanager;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,14 @@ import android.widget.Toast;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+/**
+ * Created by aaron
+ *
+ * Main activity
+ * Main activity shows the list of subjects saved
+ * Displays the total average of all the subjects
+ */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,9 +43,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Get subject for testing !!! Must validate to work for empty list !!!
+        //subjects = new ArrayList<Subject>();
+
+        //Get subject for testing !!!
         subjects = test();
         setAverage();
+
         // Initialize the ListView and the adapter
         subjectAdapter = new SubjectAdapter(this, subjects);
         subjectListView = (ListView) findViewById(R.id.subject_list_view);
@@ -49,8 +61,9 @@ public class MainActivity extends AppCompatActivity {
                 /**
                  * Opens new activity where details fo the subject are displayed
                  */
-                String picked = "Selected: " + String.valueOf(adapterView.getItemAtPosition(i));
-                Toast.makeText(MainActivity.this, picked, Toast.LENGTH_SHORT).show();
+                final int result = 1;
+                Intent openSubjectDetail = new Intent(MainActivity.this, SubjectActivity.class);
+                startActivityForResult(openSubjectDetail, result);
             }
         });
 
@@ -78,25 +91,25 @@ public class MainActivity extends AppCompatActivity {
                 newSubjectName.setText(test.getName());
 
                 //Save button from dialogs
-                builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.save_button_dialog, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         /**
                          * Saves the new name for a subject
                          */
                         if (newSubjectName.getText().toString().equals("")) {
-                            Toast.makeText(MainActivity.this, "Enter a Name", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, R.string.enter_name_toast, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         subjects.get(auxIndex).setName(newSubjectName.getText().toString());
                         subjectAdapter.notifyDataSetChanged();
-                        Toast.makeText(MainActivity.this, "Name Changed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string.name_changed_toast, Toast.LENGTH_SHORT).show();
                         return;
                     }
                 });
 
                 //Negative button from dialog
-                builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.delete_button_dialog, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         /**
@@ -105,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
                         subjects.remove(auxIndex);
                         subjectAdapter.notifyDataSetChanged();
-                        Toast.makeText(MainActivity.this, "Subject Deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string.subject_deleted_toast, Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -134,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setView(dialogView);
 
         //Create Button from dialog
-        builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.create_button_dialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -142,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //validate not null object
                 if ( mName.getText() == null) {
-                    Toast.makeText(MainActivity.this, "Error: Subject not created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.error_creation_toast, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -150,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //validate not empty string
                 if (name.equals("")) {
-                    Toast.makeText(MainActivity.this, "Enter a Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.enter_name_toast, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -158,19 +171,18 @@ public class MainActivity extends AppCompatActivity {
                 subjectAdapter.notifyDataSetChanged();
                 setAverage();
 
-                Toast.makeText(MainActivity.this, "Subject Added!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.subject_added_toast, Toast.LENGTH_SHORT).show();
                 return;
             }
         });
 
         //Cancel button from dialog
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel_button_dialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 /**
                  * Cancels subject creation
                  */
-                Toast.makeText(MainActivity.this, "Operation Canceled", Toast.LENGTH_SHORT).show();
                 return;
             }
         });
@@ -199,6 +211,10 @@ public class MainActivity extends AppCompatActivity {
         int i;
         float sum = 0.0f;
         final TextView averageTextView;
+
+        if (subjects.size() == 0) {
+            return;
+        }
 
         //Defines decimal format
         DecimalFormat df = new DecimalFormat("#.###");
