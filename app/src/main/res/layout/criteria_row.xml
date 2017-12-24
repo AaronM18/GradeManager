@@ -21,13 +21,26 @@
         android:textSize="18sp"/>
 
     <TextView
-        android:id="@+id/criteria_value_text_view"
+        android:id="@+id/criteria_points_text_view"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="right"
         android:paddingStart="5dp"
+
+        android:layout_margin="10dp"
+
+        android:text="points"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/criteria_value_text_view"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="right"
         android:paddingEnd="10dp"
         android:layout_margin="10dp"
 

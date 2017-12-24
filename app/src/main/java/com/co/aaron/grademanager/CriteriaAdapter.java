@@ -38,6 +38,7 @@ public class CriteriaAdapter extends ArrayAdapter<Criteria>{
         //Initialize widget for item
         TextView criteriaNameTextView = (TextView) view.findViewById(R.id.criteria_list_view);
         TextView criteriaAverage = (TextView) view.findViewById(R.id.criteria_value_text_view);
+        TextView criteriaPoints = (TextView) view.findViewById(R.id.criteria_points_text_view);
 
         //Float format
         DecimalFormat df = new DecimalFormat("#.###");
@@ -45,7 +46,8 @@ public class CriteriaAdapter extends ArrayAdapter<Criteria>{
 
         //Fill widgets
         criteriaNameTextView.setText(item.getName());
-        criteriaAverage.setText(df.format(item.getValue()));
+        criteriaAverage.setText(df.format(item.getValue()) + "%");
+        criteriaPoints.setText(df.format(item.getPoints()));
 
         return view;
     }

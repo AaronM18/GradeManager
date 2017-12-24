@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -62,8 +63,14 @@ public class MainActivity extends AppCompatActivity {
                  * Opens new activity where details fo the subject are displayed
                  */
                 final int result = 1;
-                Intent openSubjectDetail = new Intent(MainActivity.this, SubjectActivity.class);
-                startActivityForResult(openSubjectDetail, result);
+
+                Intent sendSubject = new Intent(MainActivity.this, SubjectActivity.class);
+
+                Subject subject =  subjects.get(i);
+
+                sendSubject.putExtra("SUBJECT", (Serializable) subject);
+
+                startActivityForResult(sendSubject, result);
             }
         });
 
@@ -87,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
 
                 //Set the name of the subject to EditText
                 final EditText newSubjectName = (EditText) dialogView.findViewById(R.id.modify_subject_dame_edit_text);
-                Subject test  = (Subject) adapterView.getItemAtPosition(auxIndex);
-                newSubjectName.setText(test.getName());
+                Subject selectedSubject  = (Subject) adapterView.getItemAtPosition(auxIndex);
+                newSubjectName.setText(selectedSubject.getName());
 
                 //Save button from dialogs
                 builder.setPositiveButton(R.string.save_button_dialog, new DialogInterface.OnClickListener() {
@@ -155,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //validate not null object
                 if ( mName.getText() == null) {
-                    Toast.makeText(MainActivity.this, R.string.error_creation_toast, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.error_subject_creation_toast, Toast.LENGTH_SHORT).show();
                     return;
                 }
 

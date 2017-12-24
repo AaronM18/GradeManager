@@ -1,5 +1,6 @@
 package com.co.aaron.grademanager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  * Get the average
  */
 
-public class Subject {
+public class Subject implements Serializable {
 
     private String name;
     private float average;

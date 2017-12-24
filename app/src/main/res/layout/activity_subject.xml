@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--                  Subject Layout                   -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context="com.co.aaron.grademanager.MainActivity"
     android:orientation="vertical"
     android:gravity="center">
 
@@ -19,6 +23,50 @@
         android:textSize="18sp"
         android:gravity="center"
         android:textStyle="bold"/>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingStart="10dp"
+            android:paddingEnd="5dp"
+            android:layout_margin="10dp"
+
+            android:text="@string/criterion_text_view"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingStart="5dp"
+
+            android:layout_margin="10dp"
+
+            android:text="@string/points_text_view"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingEnd="10dp"
+            android:layout_margin="10dp"
+
+            android:text="@string/value_text_view"
+            android:textSize="13sp"/>
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/criteria_list_view"

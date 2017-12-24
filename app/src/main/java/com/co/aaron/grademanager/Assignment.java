@@ -1,5 +1,7 @@
 package com.co.aaron.grademanager;
 
+import java.io.Serializable;
+
 /**
  * Created by aaron on 20/12/2017.
  *
@@ -15,7 +17,7 @@ package com.co.aaron.grademanager;
  * Modify contents
  */
 
-public class Assignment {
+public class Assignment implements Serializable{
 
     private String name;
     private float grade;

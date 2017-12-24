@@ -1,5 +1,6 @@
 package com.co.aaron.grademanager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -17,15 +18,17 @@ import java.util.ArrayList;
  * Get grade
  */
 
-public class Criteria {
+public class Criteria implements Serializable{
 
     private String name;
-    private float value; //Percentage value
+    private float value;   //Percentage value
+    private float points;  //Total points of the criterion
     private ArrayList<Assignment> assignments;
 
     public Criteria(String name, float value) {
         this.name = name;
         this.value = value;
+        this.points = 0;
         this.assignments = new ArrayList<>();
     }
 
@@ -43,6 +46,14 @@ public class Criteria {
 
     public void setValue(float grade) {
         this.value = grade;
+    }
+
+    public float getPoints() {
+        return points;
+    }
+
+    public void setPoints(float points) {
+        this.points = points;
     }
 
     public ArrayList<Assignment> getAssignments() {
