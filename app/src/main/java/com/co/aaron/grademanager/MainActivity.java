@@ -232,9 +232,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         sum = sum/subjects.size();
+        average = sum;
 
         averageTextView  = (TextView) findViewById(R.id.avgf_text_view);
-        averageTextView.setText(df.format(sum));
+        averageTextView.setText(df.format(average));
 
         return;
 

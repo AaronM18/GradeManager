@@ -1,6 +1,7 @@
 package com.co.aaron.grademanager;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +35,7 @@ public class SubjectActivity extends Activity {
     private CriteriaAdapter criteriaAdapter;
     private ListView criteriaListView;
     private float average;
+    private int auxIndex;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +65,43 @@ public class SubjectActivity extends Activity {
                 /**
                  * Opens Criteria Activity and display its details
                  */
+            }
+        });
+
+        //Long Click Action to modify or delete an item
+        criteriaListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                /**
+                 * Displays a dialog where the name can be edited or the subject deleted
+                 */
+                auxIndex  = i;  //Saves the index of the selected element for later use
+
+                //Defines float format
+                DecimalFormat df = new DecimalFormat("#.###");
+                df.setRoundingMode(RoundingMode.CEILING);
+
+                //Initialize Dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(SubjectActivity.this);
+                builder.setTitle(R.string.modify_subject_title_dialog);
+
+                // Inflates layout and mounts it to dialog
+                final Context context = builder.getContext();
+                final LayoutInflater inflater = LayoutInflater.from(context);
+                final View dialogView = inflater.inflate(R.layout.criteria_modify, null, false);
+                builder.setView(dialogView);
+
+                //Set the name of the subject to EditText
+                final EditText newCriteriaName = (EditText) dialogView.findViewById(R.id.modify_criteria_name_edit_text);
+                final EditText newCriteriaValue = (EditText) dialogView.findViewById(R.id.modify_criteria_value_edit_text);
+
+                Criteria selectedCriteria  = (Criteria) adapterView.getItemAtPosition(auxIndex);
+                newCriteriaName.setText(selectedCriteria.getName());
+                newCriteriaValue.setText(df.format(selectedCriteria.getValue()));
+
+                builder.show();
+
+                return true;
             }
         });
     }
@@ -145,11 +184,36 @@ public class SubjectActivity extends Activity {
                 return;
             }
         });
-        builder.show();
 
+        builder.show();
     }
 
-    public void setAverage() {
+    public void setAverage(){
+
+        int i;
+        float sum = 0.0f;
+        final TextView averageTextView;
+
+        if (subjectSelected.getCriterias().size() == 0) {
+            averageTextView  = (TextView) findViewById(R.id.subject_avg_text_view);
+            averageTextView.setText("00.00");
+            return;
+        }
+
+        //Defines decimal format
+        DecimalFormat df = new DecimalFormat("#.###");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        for (i = 0; i < subjectSelected.getCriterias().size();i++){
+            sum += subjectSelected.getCriterias().get(i).getPoints();
+        }
+
+        average = sum;
+
+        averageTextView  = (TextView) findViewById(R.id.subject_avg_text_view);
+        averageTextView.setText(df.format(average));
+
+        return;
 
     }
 }

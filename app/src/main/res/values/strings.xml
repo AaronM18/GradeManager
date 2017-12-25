@@ -2,7 +2,7 @@
 
     <string name="app_name">Grade Manager</string>
 
-    <!-- Activity Main-->
+    <!-- Activity Main -->
     <string name="average_text_view">Average:</string>
 
     <!-- Add Subject -->
@@ -10,7 +10,7 @@
     <string name="new_subject_name_hint">Name</string>
     <string name="create_subject_dialog_title">Create Subject</string>
 
-    <!-- Modify Subject-->
+    <!-- Modify Subject -->
     <string name="new_name_subject_edit_text_view">New name</string>
     <string name="modify_subject_title_dialog">Modify Subject</string>
     <string name="enter_name_toast">Enter a name</string>
@@ -23,16 +23,20 @@
     <string name="subject_added_toast">Subject added!</string>
     <string name="cancel_button_dialog">Cancel</string>
 
-    <!-- Subject detail(activity 2)-->
+    <!-- Subject detail(activity 2) -->
     <string name="value_text_view">% Value</string>
     <string name="points_text_view">Points</string>
     <string name="criterion_text_view">Criterion</string>
+    <string name="modify_criterion_title_dialog">Modify Criterion</string>
 
-    <!-- Add Criterion-->
+    <!-- Add Criterion -->
     <string name="create_criterion_title_dialog">Create Criterion</string>
     <string name="error_criterion_creation_toast">Error: Criterion not created</string>
     <string name="enter_value_toast">Enter a percentage value</string>
     <string name="criterion_added_toast">Criterion added</string>
+
+    <!-- Modify Criterion -->
+
 
 
 </resources>

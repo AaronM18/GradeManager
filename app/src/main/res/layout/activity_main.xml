@@ -11,6 +11,8 @@
     android:orientation="vertical"
     android:gravity="center">
 
+
+
     <ListView
         android:id="@+id/subject_list_view"
 

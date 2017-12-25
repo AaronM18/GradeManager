@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- Modify or Delete Subject Dialog-->
+<!--                    Modify Criterion          -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -8,7 +7,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/modify_subject_dame_edit_text"
+        android:id="@+id/modify_criteria_name_edit_text"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,6 +18,20 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+
+    <EditText
+        android:id="@+id/modify_criteria_value_edit_text"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:hint="00.00%"
+
+        android:padding="5dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="20dp"/>
 
 </LinearLayout>
