@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
     private int auxIndex;                   //aux index
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                  * Opens new activity where details fo the subject are displayed
                  */
                 final int result = 1;
+                auxIndex = i;
 
                 Intent sendSubject = new Intent(MainActivity.this, SubjectActivity.class);
 
@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
                 sendSubject.putExtra("SUBJECT", (Serializable) subject);
 
                 startActivityForResult(sendSubject, result);
+
+                //updateContents(subject);
+
             }
         });
 
@@ -125,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
                         subjects.remove(auxIndex);
                         subjectAdapter.notifyDataSetChanged();
+                        setAverage();
                         Toast.makeText(MainActivity.this, R.string.subject_deleted_toast, Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -196,23 +200,6 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public ArrayList<Subject> test() {
-        /**
-         * Method for testing the app
-         * Fills subjects with subjects
-         * !!!!! Wont be included in final version !!!!
-         */
-        int i;
-        Subject item;
-        ArrayList<Subject> list = new ArrayList<Subject>();
-
-        for (i = 0; i < 6; i++) {
-            list.add(new Subject("Subject " + String.valueOf(i), 6.0f));
-        }
-
-        return list;
-    }
-
     public void setAverage(){
 
         int i;
@@ -241,4 +228,62 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        /**
+         * Gets the selected object and replace it on the list to save modifications
+         */
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Subject subject = (Subject) data.getSerializableExtra("OBJECT");
+
+        //Updates the subject in the list
+        subjects.set(auxIndex, subject);
+        subjectAdapter.notifyDataSetChanged();
+
+        //Gets the average TextView for the selected element
+        TextView average = (TextView) getViewByPosition(auxIndex, subjectListView).findViewById(R.id.average_text_view);
+
+        //Defines decimal format
+        DecimalFormat df = new DecimalFormat("#.###");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        //Updates TextView
+        average.setText(df.format( subject.getAverage()));
+
+        //Updates total average
+        setAverage();
+
+        return;
+    }
+
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
+    }
+
+
+    public ArrayList<Subject> test() {
+        /**
+         * Method for testing the app
+         * Fills subjects with subjects
+         * !!!!! Wont be included in final version !!!!
+         */
+        int i;
+        Subject item;
+        ArrayList<Subject> list = new ArrayList<Subject>();
+
+        for (i = 0; i < 6; i++) {
+            list.add(new Subject("Subject " + String.valueOf(i), 6.0f));
+        }
+
+        return list;
+    }
 }

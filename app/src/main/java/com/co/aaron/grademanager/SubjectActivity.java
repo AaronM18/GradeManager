@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
@@ -34,7 +36,6 @@ public class SubjectActivity extends Activity {
     private Subject subjectSelected;
     private CriteriaAdapter criteriaAdapter;
     private ListView criteriaListView;
-    private float average;
     private int auxIndex;
 
     @Override
@@ -48,7 +49,7 @@ public class SubjectActivity extends Activity {
 
         //Initialize Subject Name, Average, & Adapter & ListView
         TextView subjectName = findViewById(R.id.subject_name_text_view);
-        TextView subjectAvg = findViewById(R.id.subject_avg_text_view);
+        final TextView subjectAvg = findViewById(R.id.subject_avg_text_view);
 
         criteriaListView = (ListView) findViewById(R.id.criteria_list_view);
         criteriaAdapter = new CriteriaAdapter(this, subjectSelected.getCriterias());
@@ -98,6 +99,60 @@ public class SubjectActivity extends Activity {
                 Criteria selectedCriteria  = (Criteria) adapterView.getItemAtPosition(auxIndex);
                 newCriteriaName.setText(selectedCriteria.getName());
                 newCriteriaValue.setText(df.format(selectedCriteria.getValue()));
+
+                //Save button
+                builder.setPositiveButton(R.string.save_button_dialog, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        /**
+                         * Updates name and value of the criterion
+                         */
+
+                        //Define Float Format
+                        DecimalFormat df = new DecimalFormat("#.###");
+                        df.setRoundingMode(RoundingMode.CEILING);
+
+                        //Validates empty name
+                        if (newCriteriaName.getText().toString().equals("")){
+                            Toast.makeText(SubjectActivity.this, R.string.enter_name_toast, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        //Validates empty value
+                        if (newCriteriaValue.getText().toString().equals("")) {
+                            Toast.makeText(SubjectActivity.this, R.string.enter_value_toast, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        //Validates value and updates elements
+                        try {
+
+                            float aux = Float.valueOf(newCriteriaValue.getText().toString());
+
+                            subjectSelected.getCriterias().get(auxIndex).setValue(Float.valueOf(df.format(aux)));
+                            subjectSelected.getCriterias().get(auxIndex).setName(newCriteriaName.getText().toString());
+                            subjectSelected.getCriterias().get(auxIndex).setPoints();
+                            criteriaAdapter.notifyDataSetChanged();
+
+
+                        }catch (NumberFormatException e){
+                            Toast.makeText(SubjectActivity.this, "Enter a valid decimal number for value", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                });
+
+                builder.setNegativeButton(R.string.delete_button_dialog, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        /**
+                         * Deletes the selected criteria from the list
+                         */
+                        subjectSelected.getCriterias().remove(auxIndex);
+                        criteriaAdapter.notifyDataSetChanged();
+                        Toast.makeText(SubjectActivity.this, R.string.subject_deleted_toast, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                 builder.show();
 
@@ -208,12 +263,28 @@ public class SubjectActivity extends Activity {
             sum += subjectSelected.getCriterias().get(i).getPoints();
         }
 
-        average = sum;
+        subjectSelected.setAverage(sum);
 
         averageTextView  = (TextView) findViewById(R.id.subject_avg_text_view);
-        averageTextView.setText(df.format(average));
+        averageTextView.setText(df.format(sum));
 
         return;
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        /**
+         * Back button press action
+         * Return the object selected
+         */
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            Intent returnObject = new Intent();
+            returnObject.putExtra("OBJECT", (Serializable) subjectSelected);
+            setResult(RESULT_OK, returnObject);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

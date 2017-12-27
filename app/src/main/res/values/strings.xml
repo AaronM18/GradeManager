@@ -22,6 +22,7 @@
     <string name="error_subject_creation_toast">Error: Subject not created</string>
     <string name="subject_added_toast">Subject added!</string>
     <string name="cancel_button_dialog">Cancel</string>
+    <string name="name_text_view">Name:</string>
 
     <!-- Subject detail(activity 2) -->
     <string name="value_text_view">% Value</string>
@@ -34,6 +35,8 @@
     <string name="error_criterion_creation_toast">Error: Criterion not created</string>
     <string name="enter_value_toast">Enter a percentage value</string>
     <string name="criterion_added_toast">Criterion added</string>
+    <string name="value_modify_text_view">Value:</string>
+
 
     <!-- Modify Criterion -->
 

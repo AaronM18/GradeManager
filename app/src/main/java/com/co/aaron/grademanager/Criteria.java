@@ -52,8 +52,22 @@ public class Criteria implements Serializable{
         return points;
     }
 
-    public void setPoints(float points) {
-        this.points = points;
+    public void setPoints() {
+
+        int i;
+        float sum = 0;
+
+        if (this.assignments.isEmpty()){
+            this.points = 0;
+            return;
+        }
+
+        for (i = 0; i < this.assignments.size(); i++) {
+            sum += this.assignments.get(i).getGrade();
+        }
+        sum = sum/this.assignments.size();
+
+        this.points = sum*this.value;
     }
 
     public ArrayList<Assignment> getAssignments() {

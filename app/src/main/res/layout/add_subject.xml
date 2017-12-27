@@ -23,6 +23,7 @@
         android:textColor="#000000"
         android:gravity="center" />
 
+
     <EditText
         android:id="@+id/subject_name_edit_text"
 
@@ -37,6 +38,7 @@
 
         android:hint="@string/new_subject_name_hint"
         android:gravity="left"/>
+
 
 
 </LinearLayout>
