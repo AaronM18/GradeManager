@@ -1,5 +1,5 @@
 <resources>
-
+    <!-- App name -->
     <string name="app_name">Grade Manager</string>
 
     <!-- Activity Main -->
@@ -42,6 +42,11 @@
     <!-- Criteria Detail(Activity 3) -->
     <string name="number_of_assignments_text_view">Number of assignments:</string>
     <string name="criteria_value_text_view">Criteria value:</string>
+
+
+    <!-- Add Assignment -->
+    <string name="create_assignment_title_dialog">Create Assignment</string>
+    <string name="grade_hint_edit_text">Grade</string>
 
 
 </resources>
