@@ -14,39 +14,36 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- * Created by aaron on 23/12/2017.
+ * Created by aaron on 27/12/2017.
  */
 
-public class CriteriaAdapter extends ArrayAdapter<Criteria>{
+public class AssignmentAdapter extends ArrayAdapter<Assignment> {
 
-    public CriteriaAdapter(@NonNull Context context, @NonNull ArrayList<Criteria> objects) {
-        super(context, R.layout.criteria_row, objects);
+    public AssignmentAdapter(@NonNull Context context, @NonNull ArrayList<Assignment> objects) {
+        super(context, R.layout.assignment_row, objects);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
         //Initialize the view
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View view = inflater.inflate(R.layout.criteria_row, parent, false);
+        View view = inflater.inflate(R.layout.assignment_row, parent, false);
 
         //Reads item
-        Criteria item = getItem(position);
+        Assignment item = getItem(position);
 
         //Initialize widget for item
-        TextView criteriaNameTextView = (TextView) view.findViewById(R.id.criteria_list_view);
-        TextView criteriaAverage = (TextView) view.findViewById(R.id.criteria_value_text_view);
-        TextView criteriaPoints = (TextView) view.findViewById(R.id.criteria_points_text_view);
+        TextView assignmentNameTextView = (TextView) view.findViewById(R.id.assignment_text_view);
+        TextView assignmentGrade = (TextView) view.findViewById(R.id.grade_text_view);
 
         //Float format
         DecimalFormat df = new DecimalFormat("#.###");
         df.setRoundingMode(RoundingMode.CEILING);
 
         //Fill widgets
-        criteriaNameTextView.setText(item.getName());
-        criteriaAverage.setText(df.format(item.getValue()) + "%");
-        criteriaPoints.setText(df.format(item.getPoints()));
+        assignmentNameTextView.setText(item.getName());
+        assignmentGrade.setText(df.format(item.getGrade()));
 
         return view;
     }

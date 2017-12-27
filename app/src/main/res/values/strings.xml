@@ -37,9 +37,11 @@
     <string name="criterion_added_toast">Criterion added</string>
     <string name="value_modify_text_view">Value:</string>
 
-
     <!-- Modify Criterion -->
 
+    <!-- Criteria Detail(Activity 3) -->
+    <string name="number_of_assignments_text_view">Number of assignments:</string>
+    <string name="criteria_value_text_view">Criteria value:</string>
 
 
 </resources>

@@ -2,12 +2,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center">
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/subject_text_view"
+        android:id="@+id/assignment_text_view"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,12 +17,12 @@
         android:paddingEnd="5dp"
         android:layout_margin="10dp"
 
-        android:text="Subject"
-        android:textSize="18sp"
-        android:textColor="#000000"/>
+        android:text="Assignment"
+        android:textColor="#000000"
+        android:textSize="18sp"/>
 
     <TextView
-        android:id="@+id/average_text_view"
+        android:id="@+id/grade_text_view"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +33,8 @@
         android:paddingEnd="10dp"
         android:layout_margin="10dp"
 
-        android:text="Average"
-        android:textSize="18sp"
-        android:textColor="#000000"/>
+        android:text="grade"
+        android:textColor="#000000"
+        android:textSize="18sp"/>
+
 </LinearLayout>

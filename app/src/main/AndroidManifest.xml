@@ -20,6 +20,11 @@
         <activity android:name=".SubjectActivity" >
 
         </activity>
+
+        <activity android:name=".CriterionActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

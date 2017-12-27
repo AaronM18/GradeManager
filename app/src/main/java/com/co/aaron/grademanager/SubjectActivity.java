@@ -1,7 +1,6 @@
 package com.co.aaron.grademanager;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -66,6 +65,17 @@ public class SubjectActivity extends Activity {
                 /**
                  * Opens Criteria Activity and display its details
                  */
+
+                final int result = 1;
+                auxIndex = i;
+
+                Intent sendCriteria = new Intent(SubjectActivity.this, CriterionActivity.class);
+
+                Criteria criteria =  subjectSelected.getCriterias().get(i);
+
+                sendCriteria.putExtra("CRITERIA", (Serializable) criteria);
+
+                startActivityForResult(sendCriteria, result);
             }
         });
 
@@ -129,6 +139,7 @@ public class SubjectActivity extends Activity {
 
                             float aux = Float.valueOf(newCriteriaValue.getText().toString());
 
+                            //Updates name, value and points
                             subjectSelected.getCriterias().get(auxIndex).setValue(Float.valueOf(df.format(aux)));
                             subjectSelected.getCriterias().get(auxIndex).setName(newCriteriaName.getText().toString());
                             subjectSelected.getCriterias().get(auxIndex).setPoints();
