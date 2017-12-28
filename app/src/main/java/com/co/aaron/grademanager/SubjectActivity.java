@@ -234,7 +234,7 @@ public class SubjectActivity extends Activity {
                     return;
 
                 }catch (NumberFormatException e){
-                    Toast.makeText(SubjectActivity.this, "Enter a valid decimal number for value", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SubjectActivity.this, R.string.valid_value_toast, Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -297,5 +297,46 @@ public class SubjectActivity extends Activity {
             finish();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        /**
+         * Gets the selected object and replace it on the list to save modifications
+         */
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Criteria criteria = (Criteria) data.getSerializableExtra("OBJECT");
+
+        //Updates the subject in the list
+        subjectSelected.getCriterias().set(auxIndex, criteria);
+        criteriaAdapter.notifyDataSetChanged();
+
+        //Gets the average TextView for the selected element
+        TextView points = (TextView) getViewByPosition(auxIndex, criteriaListView).findViewById(R.id.criteria_points_text_view);
+
+        //Defines decimal format
+        DecimalFormat df = new DecimalFormat("#.###");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        //Updates TextView
+        points.setText(df.format( criteria.getPoints()));
+
+        //Updates total average
+        setAverage();
+
+        return;
+    }
+
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
     }
 }

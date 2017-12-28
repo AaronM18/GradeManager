@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
 import java.math.RoundingMode;
@@ -36,6 +37,7 @@ public class AssignmentAdapter extends ArrayAdapter<Assignment> {
         //Initialize widget for item
         TextView assignmentNameTextView = (TextView) view.findViewById(R.id.assignment_text_view);
         TextView assignmentGrade = (TextView) view.findViewById(R.id.grade_text_view);
+        TextView assignmentDate = (TextView) view.findViewById(R.id.date_text_view);
 
         //Float format
         DecimalFormat df = new DecimalFormat("#.###");
@@ -44,6 +46,7 @@ public class AssignmentAdapter extends ArrayAdapter<Assignment> {
         //Fill widgets
         assignmentNameTextView.setText(item.getName());
         assignmentGrade.setText(df.format(item.getGrade()));
+        assignmentDate.setText(item.getDeliverDate());
 
         return view;
     }

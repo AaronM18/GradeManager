@@ -10,21 +10,57 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:text="Enter the name and grade:"
+        android:padding="5dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+
+        android:text="@string/add_assignment_text_view"
         android:textColor="#000000"
         android:textSize="18sp"/>
 
     <EditText
+        android:id="@+id/assignment_name_text_view"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        android:padding="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
 
         android:hint="@string/name_text_view"/>
 
     <EditText
+        android:id="@+id/assignment_grade_text_view"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
+        android:padding="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
+
         android:hint="@string/grade_hint_edit_text"/>
+
+    <CalendarView
+        android:id="@+id/delivery_date_calendar_view"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp">
+
+    </CalendarView>
 
 
 

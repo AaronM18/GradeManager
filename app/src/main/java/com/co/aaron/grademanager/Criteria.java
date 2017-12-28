@@ -67,7 +67,7 @@ public class Criteria implements Serializable{
         }
         sum = sum/this.assignments.size();
 
-        this.points = sum*this.value;
+        this.points = sum*this.value/100;
     }
 
     public ArrayList<Assignment> getAssignments() {

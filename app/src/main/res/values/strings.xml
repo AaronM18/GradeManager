@@ -9,6 +9,7 @@
     <string name="create_subject_text_view">Enter de name of the new subject:</string>
     <string name="new_subject_name_hint">Name</string>
     <string name="create_subject_dialog_title">Create Subject</string>
+    <string name="valid_value_toast">Enter a valid decimal number for value</string>
 
     <!-- Modify Subject -->
     <string name="new_name_subject_edit_text_view">New name</string>
@@ -47,6 +48,11 @@
     <!-- Add Assignment -->
     <string name="create_assignment_title_dialog">Create Assignment</string>
     <string name="grade_hint_edit_text">Grade</string>
+    <string name="add_assignment_text_view">Enter the name, grade, and delivery date:</string>
+    <string name="error_assignment_toast">Error creating assignment</string>
+    <string name="enter_date_toast">Enter a date</string>
+    <string name="assignment_created_toast">Assignment created</string>
+    <string name="valid_grade_toast">Enter a valid grade</string>
 
 
 </resources>
