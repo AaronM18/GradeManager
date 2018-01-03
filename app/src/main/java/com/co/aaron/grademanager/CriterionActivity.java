@@ -1,17 +1,22 @@
 package com.co.aaron.grademanager;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,7 +26,10 @@ import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by aaron on 27/12/2017.
@@ -46,7 +54,7 @@ public class CriterionActivity extends Activity {
         //Initialize TextView, ListView and Adapter
         TextView criteriaName = (TextView) findViewById(R.id.criteria_name_text_view);
         TextView criteriaValue = (TextView)  findViewById(R.id.criterion_value_text_view);
-        TextView criteriaAssignmentsNumber = (TextView) findViewById(R.id.number_assignments_text_view);
+        final TextView criteriaAssignmentsNumber = (TextView) findViewById(R.id.number_assignments_text_view);
         final TextView criteriaPoints = (TextView) findViewById(R.id.criteria_points_text_view);
 
         assignmentListView = (ListView) findViewById(R.id.assignment_list_view);
@@ -71,18 +79,132 @@ public class CriterionActivity extends Activity {
         assignmentListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                /**
+                 * Displays a dialog where the assignment can be edited
+                 */
+                auxIndex  = i;  //Saves the index of the selected element for later use
+
+                //Defines float format
+                DecimalFormat df = new DecimalFormat("#.###");
+                df.setRoundingMode(RoundingMode.CEILING);
+
+                //Initialize Dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(CriterionActivity.this);
+                builder.setTitle(R.string.modify_assignment_title_dialog);
+
+                // Inflates layout and mounts it to dialog
+                final Context context = builder.getContext();
+                final LayoutInflater inflater = LayoutInflater.from(context);
+                final View dialogView = inflater.inflate(R.layout.assignment_modify, null, false);
+                builder.setView(dialogView);
+
+                //Set the name of the subject to EditText
+                final EditText newAssignmentName = (EditText) dialogView.findViewById(R.id.modify_assignment_name_edit_text);
+                final EditText newAssignmentGrade = (EditText) dialogView.findViewById(R.id.modify_assignment_grade_edit_text);
+                final EditText setDateText = (EditText) dialogView.findViewById(R.id.enter_assignment_date_edit_text);
+
+                //Sets the contents of the widgets
+                final Assignment selectedAssignment  = (Assignment) adapterView.getItemAtPosition(auxIndex);
+                newAssignmentName.setText(selectedAssignment.getName());
+                newAssignmentGrade.setText(df.format(selectedAssignment.getGrade()));
+                setDateText.setText(selectedAssignment.getDeliverDate());
+
+                //Set date button
+                setDateText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String[] date = selectedAssignment.getDeliverDate().split("/");
+                        final int year = Integer.valueOf(date[2]);
+                        final int month = Integer.valueOf(date[1]);
+                        final int day = Integer.valueOf(date[0]);
+
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(CriterionActivity.this, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                                setDateText.setText(i2 + "/" + i1 + "/" + i);
+                            }
+                        }, year, month, day);
+
+                        Calendar cal  = Calendar.getInstance();
+                        cal.add(Calendar.MONTH, -6);
+                        datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+
+                        datePickerDialog.show();
+
+                    }
+                });
+
+                //Save button
+                builder.setPositiveButton(R.string.save_button_dialog, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        /**
+                         * Updates name, value and date of the assignment
+                         */
+
+                        //Define Float Format
+                        DecimalFormat df = new DecimalFormat("#.###");
+                        df.setRoundingMode(RoundingMode.CEILING);
+
+                        //Define Date Format
+                        SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/yy");
+
+                        //Validates empty name
+                        if (newAssignmentName.getText().toString().equals("")){
+                            Toast.makeText(CriterionActivity.this, R.string.enter_name_toast, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        //Validates empty value
+                        if (newAssignmentGrade.getText().toString().equals("")) {
+                            Toast.makeText(CriterionActivity.this, R.string.enter_grade_toast , Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        //Validates value and updates elements
+                        try {
+
+                            float aux = Float.valueOf(newAssignmentGrade.getText().toString());
+
+                            //Updates name, value and points
+                            criteriaSelected.getAssignments().get(auxIndex).setGrade(Float.valueOf(df.format(aux)));
+                            criteriaSelected.getAssignments().get(auxIndex).setName(newAssignmentName.getText().toString());
+                            criteriaSelected.getAssignments().get(auxIndex).setDeliverDate(setDateText.getText().toString());
+
+                            //Updates points
+                            criteriaSelected.setPoints();
+                            assignmentAdapter.notifyDataSetChanged();
+                            updatePoints();
+
+
+                        }catch (NumberFormatException e){
+                            Toast.makeText(CriterionActivity.this, R.string.valid_assignment_grade_toast, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                });
+
+                //Delete Button
+                builder.setNegativeButton(R.string.delete_button_dialog, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        /**
+                         * Deletes selected assignment from the list
+                         */
+                        criteriaSelected.getAssignments().remove(auxIndex);
+                        assignmentAdapter.notifyDataSetChanged();
+                        Toast.makeText(CriterionActivity.this, R.string.assignment_deleted_toast, Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                builder.show();
                 return true;
             }
         });
 
-        assignmentListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                return true;
-            }
-        });
+
     }
-
     public void addAssignmentButton(View view) {
         /**
          * Button to add a new assignment to the list
@@ -202,3 +324,5 @@ public class CriterionActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 }
+
+

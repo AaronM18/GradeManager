@@ -54,5 +54,13 @@
     <string name="assignment_created_toast">Assignment created</string>
     <string name="valid_grade_toast">Enter a valid grade</string>
 
+    <!-- Modify Assignment -->
+    <string name="modify_assignment_title_dialog">Modify Assignment</string>
+    <string name="grade_text_view">Grade:</string>
+    <string name="valid_assignment_grade_toast">Enter valid grade</string>
+    <string name="enter_grade_toast">Enter a grade</string>
+    <string name="assignment_deleted_toast">Assignment deleted</string>
+    <string name="date_tex_view">Date:</string>
+
 
 </resources>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/name_text_view"
+            android:textSize="18sp"
+            android:textColor="#000000"
+
+            android:padding="5dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+        <EditText
+            android:id="@+id/modify_assignment_name_edit_text"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:gravity="left"
+
+            android:padding="5dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/grade_text_view"
+            android:textSize="18sp"
+            android:textColor="#000000"
+
+            android:padding="5dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+        <EditText
+            android:id="@+id/modify_assignment_grade_edit_text"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:gravity="left"
+
+            android:padding="5dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/date_tex_view"
+            android:textSize="18sp"
+            android:textColor="#000000"
+
+            android:padding="5dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+        <EditText
+            android:id="@+id/enter_assignment_date_edit_text"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:gravity="left"
+
+            android:padding="5dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>
