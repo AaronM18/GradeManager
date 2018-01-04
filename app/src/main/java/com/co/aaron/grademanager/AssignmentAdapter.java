@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
 import android.widget.TextView;
 
 import java.math.RoundingMode;
@@ -16,11 +15,12 @@ import java.util.ArrayList;
 
 /**
  * Created by aaron on 27/12/2017.
+ * Adapter for Assignments in Criteria Activity
  */
 
 public class AssignmentAdapter extends ArrayAdapter<Assignment> {
 
-    public AssignmentAdapter(@NonNull Context context, @NonNull ArrayList<Assignment> objects) {
+    AssignmentAdapter(@NonNull Context context, @NonNull ArrayList<Assignment> objects) {
         super(context, R.layout.assignment_row, objects);
     }
 
@@ -35,15 +35,16 @@ public class AssignmentAdapter extends ArrayAdapter<Assignment> {
         Assignment item = getItem(position);
 
         //Initialize widget for item
-        TextView assignmentNameTextView = (TextView) view.findViewById(R.id.assignment_text_view);
-        TextView assignmentGrade = (TextView) view.findViewById(R.id.grade_text_view);
-        TextView assignmentDate = (TextView) view.findViewById(R.id.date_text_view);
+        TextView assignmentNameTextView = view.findViewById(R.id.assignment_text_view);
+        TextView assignmentGrade = view.findViewById(R.id.grade_text_view);
+        TextView assignmentDate = view.findViewById(R.id.date_text_view);
 
         //Float format
         DecimalFormat df = new DecimalFormat("#.###");
         df.setRoundingMode(RoundingMode.CEILING);
 
         //Fill widgets
+        assert item != null;
         assignmentNameTextView.setText(item.getName());
         assignmentGrade.setText(df.format(item.getGrade()));
         assignmentDate.setText(item.getDeliverDate());

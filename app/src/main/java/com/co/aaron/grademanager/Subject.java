@@ -1,6 +1,5 @@
 package com.co.aaron.grademanager;
 
-import android.os.Parcelable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -47,15 +46,15 @@ public class Subject implements Serializable {
         this.name = name;
     }
 
-    public float getAverage() {
+    float getAverage() {
         return average;
     }
 
-    public void setAverage(float average) {
+    void setAverage(float average) {
         this.average = average;
     }
 
-    public ArrayList<Criteria> getCriterias() {
+    ArrayList<Criteria> getCriterias() {
         return criterias;
     }
 

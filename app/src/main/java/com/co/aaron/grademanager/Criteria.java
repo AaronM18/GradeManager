@@ -40,19 +40,19 @@ public class Criteria implements Serializable{
         this.name = name;
     }
 
-    public float getValue() {
+    float getValue() {
         return value;
     }
 
-    public void setValue(float grade) {
+    void setValue(float grade) {
         this.value = grade;
     }
 
-    public float getPoints() {
+    float getPoints() {
         return points;
     }
 
-    public void setPoints() {
+    void setPoints() {
 
         int i;
         float sum = 0;
@@ -70,7 +70,7 @@ public class Criteria implements Serializable{
         this.points = sum*this.value/100;
     }
 
-    public ArrayList<Assignment> getAssignments() {
+    ArrayList<Assignment> getAssignments() {
         return assignments;
     }
 

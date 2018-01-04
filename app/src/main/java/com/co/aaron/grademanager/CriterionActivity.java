@@ -2,20 +2,16 @@ package com.co.aaron.grademanager;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -24,22 +20,22 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 import java.math.RoundingMode;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by aaron on 27/12/2017.
+ * Activity that shows te contents of criteria
+ * Value
+ * Points
+ * Assignments
  */
 
 public class CriterionActivity extends Activity {
 
     private Criteria criteriaSelected;
     private AssignmentAdapter assignmentAdapter;
-    private ListView assignmentListView;
     private int auxIndex;
 
     @Override
@@ -52,12 +48,12 @@ public class CriterionActivity extends Activity {
         criteriaSelected = (Criteria) getCriteria.getSerializableExtra("CRITERIA");
 
         //Initialize TextView, ListView and Adapter
-        TextView criteriaName = (TextView) findViewById(R.id.criteria_name_text_view);
-        TextView criteriaValue = (TextView)  findViewById(R.id.criterion_value_text_view);
-        final TextView criteriaAssignmentsNumber = (TextView) findViewById(R.id.number_assignments_text_view);
-        final TextView criteriaPoints = (TextView) findViewById(R.id.criteria_points_text_view);
+        TextView criteriaName = findViewById(R.id.criteria_name_text_view);
+        TextView criteriaValue = findViewById(R.id.criterion_value_text_view);
+        final TextView criteriaAssignmentsNumber = findViewById(R.id.number_assignments_text_view);
+        final TextView criteriaPoints = findViewById(R.id.criteria_points_text_view);
 
-        assignmentListView = (ListView) findViewById(R.id.assignment_list_view);
+        ListView assignmentListView = findViewById(R.id.assignment_list_view);
         assignmentAdapter =  new AssignmentAdapter(this, criteriaSelected.getAssignments());
         assignmentListView.setAdapter(assignmentAdapter);
 
@@ -82,6 +78,7 @@ public class CriterionActivity extends Activity {
                 /**
                  * Displays a dialog where the assignment can be edited
                  */
+
                 auxIndex  = i;  //Saves the index of the selected element for later use
 
                 //Defines float format
@@ -99,9 +96,9 @@ public class CriterionActivity extends Activity {
                 builder.setView(dialogView);
 
                 //Set the name of the subject to EditText
-                final EditText newAssignmentName = (EditText) dialogView.findViewById(R.id.modify_assignment_name_edit_text);
-                final EditText newAssignmentGrade = (EditText) dialogView.findViewById(R.id.modify_assignment_grade_edit_text);
-                final EditText setDateText = (EditText) dialogView.findViewById(R.id.enter_assignment_date_edit_text);
+                final EditText newAssignmentName = dialogView.findViewById(R.id.modify_assignment_name_edit_text);
+                final EditText newAssignmentGrade = dialogView.findViewById(R.id.modify_assignment_grade_edit_text);
+                final EditText setDateText = dialogView.findViewById(R.id.enter_assignment_date_edit_text);
 
                 //Sets the contents of the widgets
                 final Assignment selectedAssignment  = (Assignment) adapterView.getItemAtPosition(auxIndex);
@@ -121,7 +118,8 @@ public class CriterionActivity extends Activity {
                         DatePickerDialog datePickerDialog = new DatePickerDialog(CriterionActivity.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                                setDateText.setText(i2 + "/" + i1 + "/" + i);
+                                String date = i2 + "/" + i1 + "/" + i;
+                                setDateText.setText(date);
                             }
                         }, year, month, day);
 
@@ -270,7 +268,7 @@ public class CriterionActivity extends Activity {
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/DD/yy");
 
                 //validate not null object
-                if (assignmentName.getText() == null || assignmentGrade.getText() == null || assignmentDate == null) {
+                if (assignmentName.getText() == null || assignmentGrade.getText() == null) {
                     Toast.makeText(CriterionActivity.this, R.string.error_assignment_toast, Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -327,12 +325,12 @@ public class CriterionActivity extends Activity {
         final TextView pointsTextView;
 
         if (criteriaSelected.getAssignments().size() == 0) {
-            pointsTextView  = (TextView) findViewById(R.id.criteria_points_text_view);
+            pointsTextView  = findViewById(R.id.criteria_points_text_view);
             pointsTextView.setText("00.00");
             return;
         }
 
-        pointsTextView = (TextView) findViewById(R.id.criteria_points_text_view);
+        pointsTextView = findViewById(R.id.criteria_points_text_view);
         criteriaSelected.setPoints();
         pointsTextView.setText(String.valueOf(criteriaSelected.getPoints()));
 
@@ -348,7 +346,7 @@ public class CriterionActivity extends Activity {
         if ((keyCode == KeyEvent.KEYCODE_BACK))
         {
             Intent returnObject = new Intent();
-            returnObject.putExtra("OBJECT", (Serializable) criteriaSelected);
+            returnObject.putExtra("OBJECT", criteriaSelected);
             setResult(RESULT_OK, returnObject);
             finish();
         }

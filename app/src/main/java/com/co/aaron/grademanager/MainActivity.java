@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -31,7 +29,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Subject> subjects;    // list of subjects
-    private float average;                  // Average of all the active subjects
 
     private ListView subjectListView;       // ListView for subjects
     private  SubjectAdapter subjectAdapter; // Adapter for subjects
@@ -43,15 +40,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //subjects = new ArrayList<Subject>();
+        subjects = new ArrayList<Subject>();
 
         //Get subject for testing !!!
-        subjects = test();
+        //subjects = test();
         setAverage();
 
         // Initialize the ListView and the adapter
         subjectAdapter = new SubjectAdapter(this, subjects);
-        subjectListView = (ListView) findViewById(R.id.subject_list_view);
+        subjectListView = findViewById(R.id.subject_list_view);
         subjectListView.setAdapter(subjectAdapter);
 
         // Click Action for a click on an item of the list
@@ -68,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Subject subject =  subjects.get(i);
 
-                sendSubject.putExtra("SUBJECT", (Serializable) subject);
+                sendSubject.putExtra("SUBJECT", subject);
 
                 startActivityForResult(sendSubject, result);
 
@@ -96,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 builder.setView(dialogView);
 
                 //Set the name of the subject to EditText
-                final EditText newSubjectName = (EditText) dialogView.findViewById(R.id.modify_subject_dame_edit_text);
+                final EditText newSubjectName = dialogView.findViewById(R.id.modify_subject_dame_edit_text);
                 Subject selectedSubject  = (Subject) adapterView.getItemAtPosition(auxIndex);
                 newSubjectName.setText(selectedSubject.getName());
 
@@ -162,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                EditText mName = (EditText) dialogView.findViewById(R.id.subject_name_edit_text);
+                EditText mName = dialogView.findViewById(R.id.subject_name_edit_text);
 
                 //validate not null object
                 if ( mName.getText() == null) {
@@ -219,10 +216,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         sum = sum/subjects.size();
-        average = sum;
 
-        averageTextView  = (TextView) findViewById(R.id.avgf_text_view);
-        averageTextView.setText(df.format(average));
+        averageTextView  = findViewById(R.id.avgf_text_view);
+        averageTextView.setText(df.format(sum));
 
         return;
 
@@ -242,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
         subjectAdapter.notifyDataSetChanged();
 
         //Gets the average TextView for the selected element
-        TextView average = (TextView) getViewByPosition(auxIndex, subjectListView).findViewById(R.id.average_text_view);
+        TextView average = getViewByPosition(auxIndex, subjectListView).findViewById(R.id.average_text_view);
 
         //Defines decimal format
         DecimalFormat df = new DecimalFormat("#.###");
@@ -277,8 +273,7 @@ public class MainActivity extends AppCompatActivity {
          * !!!!! Wont be included in final version !!!!
          */
         int i;
-        Subject item;
-        ArrayList<Subject> list = new ArrayList<Subject>();
+        ArrayList<Subject> list = new ArrayList<>();
 
         for (i = 0; i < 6; i++) {
             list.add(new Subject("Subject " + String.valueOf(i), 6.0f));

@@ -37,19 +37,19 @@ public class Assignment implements Serializable{
         this.name = name;
     }
 
-    public float getGrade() {
+    float getGrade() {
         return grade;
     }
 
-    public void setGrade(float grade) {
+    void setGrade(float grade) {
         this.grade = grade;
     }
 
-    public String getDeliverDate() {
+    String getDeliverDate() {
         return deliverDate;
     }
 
-    public void setDeliverDate(String deliverDate) {
+    void setDeliverDate(String deliverDate) {
         this.deliverDate = deliverDate;
     }
 }

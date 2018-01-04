@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,8 +102,8 @@ public class SubjectActivity extends Activity {
                 builder.setView(dialogView);
 
                 //Set the name of the subject to EditText
-                final EditText newCriteriaName = (EditText) dialogView.findViewById(R.id.modify_criteria_name_edit_text);
-                final EditText newCriteriaValue = (EditText) dialogView.findViewById(R.id.modify_criteria_value_edit_text);
+                final EditText newCriteriaName = dialogView.findViewById(R.id.modify_criteria_name_edit_text);
+                final EditText newCriteriaValue = dialogView.findViewById(R.id.modify_criteria_value_edit_text);
 
                 Criteria selectedCriteria  = (Criteria) adapterView.getItemAtPosition(auxIndex);
                 newCriteriaName.setText(selectedCriteria.getName());
@@ -261,7 +260,7 @@ public class SubjectActivity extends Activity {
         final TextView averageTextView;
 
         if (subjectSelected.getCriterias().size() == 0) {
-            averageTextView  = (TextView) findViewById(R.id.subject_avg_text_view);
+            averageTextView  = findViewById(R.id.subject_avg_text_view);
             averageTextView.setText("00.00");
             return;
         }
@@ -276,7 +275,7 @@ public class SubjectActivity extends Activity {
 
         subjectSelected.setAverage(sum);
 
-        averageTextView  = (TextView) findViewById(R.id.subject_avg_text_view);
+        averageTextView  = findViewById(R.id.subject_avg_text_view);
         averageTextView.setText(df.format(sum));
 
         return;
@@ -292,7 +291,7 @@ public class SubjectActivity extends Activity {
         if ((keyCode == KeyEvent.KEYCODE_BACK))
         {
             Intent returnObject = new Intent();
-            returnObject.putExtra("OBJECT", (Serializable) subjectSelected);
+            returnObject.putExtra("OBJECT", subjectSelected);
             setResult(RESULT_OK, returnObject);
             finish();
         }
@@ -313,7 +312,7 @@ public class SubjectActivity extends Activity {
         criteriaAdapter.notifyDataSetChanged();
 
         //Gets the average TextView for the selected element
-        TextView points = (TextView) getViewByPosition(auxIndex, criteriaListView).findViewById(R.id.criteria_points_text_view);
+        TextView points = getViewByPosition(auxIndex, criteriaListView).findViewById(R.id.criteria_points_text_view);
 
         //Defines decimal format
         DecimalFormat df = new DecimalFormat("#.###");

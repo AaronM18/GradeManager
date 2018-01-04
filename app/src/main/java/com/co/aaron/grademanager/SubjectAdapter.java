@@ -12,7 +12,6 @@ import android.widget.TextView;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by aaron on 20/12/2017.
@@ -24,7 +23,7 @@ import java.util.List;
 
 public class SubjectAdapter extends ArrayAdapter<Subject>{
 
-    public SubjectAdapter(@NonNull Context context, @NonNull ArrayList<Subject> objects) {
+    SubjectAdapter(@NonNull Context context, @NonNull ArrayList<Subject> objects) {
         super(context, R.layout.subject_row, objects);
     }
 
@@ -40,14 +39,15 @@ public class SubjectAdapter extends ArrayAdapter<Subject>{
         Subject item = getItem(position);
 
         //Initialize the widgets for that item
-        TextView subjectNameTextView = (TextView) view.findViewById(R.id.subject_text_view);
-        TextView averageTextView = (TextView) view.findViewById(R.id.average_text_view);
+        TextView subjectNameTextView = view.findViewById(R.id.subject_text_view);
+        TextView averageTextView = view.findViewById(R.id.average_text_view);
 
         //Defines float format
         DecimalFormat df = new DecimalFormat("#.###");
         df.setRoundingMode(RoundingMode.CEILING);
 
         //Fills the widgets for that item
+        assert item != null;
         subjectNameTextView.setText(item.getName());
         averageTextView.setText( df.format(item.getAverage() ) );
 
