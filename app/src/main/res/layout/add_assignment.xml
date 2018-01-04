@@ -48,19 +48,20 @@
 
         android:hint="@string/grade_hint_edit_text"/>
 
-    <CalendarView
-        android:id="@+id/delivery_date_calendar_view"
+    <EditText
+        android:id="@+id/delivery_date_edit_text"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:padding="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="15dp"
 
-    </CalendarView>
+        android:hint="@string/delivery_date_hint"/>
+
 
 
 

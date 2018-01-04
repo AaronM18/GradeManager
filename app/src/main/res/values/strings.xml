@@ -53,6 +53,7 @@
     <string name="enter_date_toast">Enter a date</string>
     <string name="assignment_created_toast">Assignment created</string>
     <string name="valid_grade_toast">Enter a valid grade</string>
+    <string name="delivery_date_hint">Delivery date</string>
 
     <!-- Modify Assignment -->
     <string name="modify_assignment_title_dialog">Modify Assignment</string>

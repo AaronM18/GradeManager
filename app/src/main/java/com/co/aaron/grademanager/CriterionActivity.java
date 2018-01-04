@@ -161,6 +161,12 @@ public class CriterionActivity extends Activity {
                             return;
                         }
 
+                        //Validates empty date
+                        if (setDateText.getText().toString().equals("")) {
+                            Toast.makeText(CriterionActivity.this, R.string.enter_date_toast, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         //Validates value and updates elements
                         try {
 
@@ -205,6 +211,7 @@ public class CriterionActivity extends Activity {
 
 
     }
+
     public void addAssignmentButton(View view) {
         /**
          * Button to add a new assignment to the list
@@ -223,6 +230,31 @@ public class CriterionActivity extends Activity {
         final View dialogView = inflater.inflate(R.layout.add_assignment, null, false);
         builder.setView(dialogView);
 
+        //Initialize Date edit text
+        final EditText assignmentDate = (EditText) dialogView.findViewById(R.id.delivery_date_edit_text);
+
+        //DatePicker dialog from date edit text
+        assignmentDate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                final int year = 2000;
+                final int month = 1;
+                final int day = 1;
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(CriterionActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        assignmentDate.setText(i2 + "/" + i1 + "/" + i);
+                    }
+                }, year, month, day);
+
+                Calendar cal  = Calendar.getInstance();
+                cal.add(Calendar.MONTH, -6);
+                datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+
+                datePickerDialog.show();
+            }
+        });
+
         //Create button
         builder.setPositiveButton(R.string.save_button_dialog, new DialogInterface.OnClickListener() {
             @Override
@@ -231,7 +263,6 @@ public class CriterionActivity extends Activity {
                 //Initialize EditTexts
                 EditText assignmentName = (EditText) dialogView.findViewById(R.id.assignment_name_text_view);
                 EditText assignmentGrade = (EditText) dialogView.findViewById(R.id.assignment_grade_text_view);
-                CalendarView assignmentDate = (CalendarView) dialogView.findViewById(R.id.delivery_date_calendar_view);
 
                 //Define Float and date Format
                 DecimalFormat df = new DecimalFormat("#.###");
@@ -246,7 +277,7 @@ public class CriterionActivity extends Activity {
 
                 //Get values from EditTexts
                 String name = assignmentName.getText().toString();
-                String date = sdf.format(assignmentDate.getDate());
+                String date = assignmentDate.getText().toString();
 
                 //validate not empty string
                 if (name.equals("")) {
