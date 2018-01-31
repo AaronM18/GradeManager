@@ -5,7 +5,9 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
@@ -17,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.math.RoundingMode;
@@ -36,6 +40,8 @@ public class CriterionActivity extends Activity {
 
     private Criteria criteriaSelected;
     private AssignmentAdapter assignmentAdapter;
+    private int subjectIndex;
+    private int criteriaIndex;
     private int auxIndex;
 
     @Override
@@ -45,7 +51,12 @@ public class CriterionActivity extends Activity {
 
         //Gets Subject from Intent
         Intent getCriteria = getIntent();
-        criteriaSelected = (Criteria) getCriteria.getSerializableExtra("CRITERIA");
+        //criteriaSelected = (Criteria) getCriteria.getSerializableExtra("CRITERIA");
+        subjectIndex = (int) getCriteria.getSerializableExtra("SUBJECT_INDEX");
+        criteriaIndex = (int) getCriteria.getSerializableExtra("CRITERIA_INDEX");
+
+        //Gets selected criteria shortcut
+        criteriaSelected = MainActivity.subjects.get(subjectIndex).getCriterias().get(criteriaIndex);
 
         //Initialize TextView, ListView and Adapter
         TextView criteriaName = findViewById(R.id.criteria_name_text_view);
@@ -179,6 +190,7 @@ public class CriterionActivity extends Activity {
                             criteriaSelected.setPoints();
                             assignmentAdapter.notifyDataSetChanged();
                             updatePoints();
+                            saveContent();
 
 
                         }catch (NumberFormatException e){
@@ -198,6 +210,7 @@ public class CriterionActivity extends Activity {
                         criteriaSelected.getAssignments().remove(auxIndex);
                         assignmentAdapter.notifyDataSetChanged();
                         Toast.makeText(CriterionActivity.this, R.string.assignment_deleted_toast, Toast.LENGTH_SHORT).show();
+                        saveContent();
 
                     }
                 });
@@ -305,6 +318,7 @@ public class CriterionActivity extends Activity {
                     pointsTextView.setText(String.valueOf(criteriaSelected.getAssignments().size()));
 
                     Toast.makeText(CriterionActivity.this, R.string.assignment_created_toast, Toast.LENGTH_SHORT).show();
+                    saveContent();
                     return;
 
                 } catch (NumberFormatException e) {
@@ -337,20 +351,16 @@ public class CriterionActivity extends Activity {
         return;
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        /**
-         * Back button press action
-         * Return the object selected
-         */
-        if ((keyCode == KeyEvent.KEYCODE_BACK))
-        {
-            Intent returnObject = new Intent();
-            returnObject.putExtra("OBJECT", criteriaSelected);
-            setResult(RESULT_OK, returnObject);
-            finish();
-        }
-        return super.onKeyDown(keyCode, event);
+    void saveContent() {
+
+        SharedPreferences appSharedPrefs  = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(MainActivity.subjects);
+
+        prefsEditor.putString("Subjects", json);
+        prefsEditor.commit();
     }
 }
 

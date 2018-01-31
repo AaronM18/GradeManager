@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +19,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.List;
 
 /**
  * Created by aaron on 23/12/2017.
@@ -35,6 +43,7 @@ public class SubjectActivity extends Activity {
     private CriteriaAdapter criteriaAdapter;
     private ListView criteriaListView;
     private int auxIndex;
+    private int subjectIndex;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,14 +52,18 @@ public class SubjectActivity extends Activity {
 
         //Gets Subject from Intent
         Intent getSubject = getIntent();
-        subjectSelected = (Subject) getSubject.getSerializableExtra("SUBJECT");
+
+        subjectIndex = (int) getSubject.getSerializableExtra("SUBJECT_INDEX");
+
+        //subjectSelected = (Subject) getSubject.getSerializableExtra("SUBJECT");
+        subjectSelected = MainActivity.subjects.get(subjectIndex);
 
         //Initialize Subject Name, Average, & Adapter & ListView
         TextView subjectName = findViewById(R.id.subject_name_text_view);
         final TextView subjectAvg = findViewById(R.id.subject_avg_text_view);
 
-        criteriaListView = (ListView) findViewById(R.id.criteria_list_view);
-        criteriaAdapter = new CriteriaAdapter(this, subjectSelected.getCriterias());
+        criteriaListView = findViewById(R.id.criteria_list_view);
+        criteriaAdapter = new CriteriaAdapter(this, MainActivity.subjects.get(subjectIndex).getCriterias());
         criteriaListView.setAdapter(criteriaAdapter);
 
         //Set Subject Name, Average
@@ -70,9 +83,12 @@ public class SubjectActivity extends Activity {
 
                 Intent sendCriteria = new Intent(SubjectActivity.this, CriterionActivity.class);
 
+                sendCriteria.putExtra("SUBJECT_INDEX", subjectIndex);
+                sendCriteria.putExtra("CRITERIA_INDEX", auxIndex);
+                /*
                 Criteria criteria =  subjectSelected.getCriterias().get(i);
 
-                sendCriteria.putExtra("CRITERIA", (Serializable) criteria);
+                sendCriteria.putExtra("CRITERIA", (Serializable) criteria);*/
 
                 startActivityForResult(sendCriteria, result);
             }
@@ -139,10 +155,15 @@ public class SubjectActivity extends Activity {
                             float aux = Float.valueOf(newCriteriaValue.getText().toString());
 
                             //Updates name, value and points
-                            subjectSelected.getCriterias().get(auxIndex).setValue(Float.valueOf(df.format(aux)));
+                             /* subjectSelected.getCriterias().get(auxIndex).setValue(Float.valueOf(df.format(aux)));
                             subjectSelected.getCriterias().get(auxIndex).setName(newCriteriaName.getText().toString());
-                            subjectSelected.getCriterias().get(auxIndex).setPoints();
+                            subjectSelected.getCriterias().get(auxIndex).setPoints();*/
+
+                            MainActivity.subjects.get(subjectIndex).getCriterias().get(auxIndex).setValue(Float.valueOf(df.format(aux)));
+                            MainActivity.subjects.get(subjectIndex).getCriterias().get(auxIndex).setName(newCriteriaName.getText().toString());
+                            MainActivity.subjects.get(subjectIndex).getCriterias().get(auxIndex).setPoints();
                             criteriaAdapter.notifyDataSetChanged();
+                            saveContent();
 
 
                         }catch (NumberFormatException e){
@@ -158,7 +179,8 @@ public class SubjectActivity extends Activity {
                         /**
                          * Deletes the selected criteria from the list
                          */
-                        subjectSelected.getCriterias().remove(auxIndex);
+                        //subjectSelected.getCriterias().remove(auxIndex);
+                        MainActivity.subjects.get(subjectIndex).getCriterias().remove(auxIndex);
                         criteriaAdapter.notifyDataSetChanged();
                         Toast.makeText(SubjectActivity.this, R.string.subject_deleted_toast, Toast.LENGTH_SHORT).show();
                     }
@@ -195,8 +217,8 @@ public class SubjectActivity extends Activity {
             public void onClick(DialogInterface dialogInterface, int i) {
 
                 //Initialize EditTexts
-                EditText mName = (EditText) dialogView.findViewById(R.id.criterion_name_edit_text);
-                EditText mValue = (EditText) dialogView.findViewById(R.id.criterion_value_edit_text);
+                EditText mName = dialogView.findViewById(R.id.criterion_name_edit_text);
+                EditText mValue = dialogView.findViewById(R.id.criterion_value_edit_text);
 
                 //Define Float Format
                 DecimalFormat df = new DecimalFormat("#.###");
@@ -225,11 +247,13 @@ public class SubjectActivity extends Activity {
                 try{
                     String value = df.format(Float.valueOf(mValue.getText().toString()));
 
-                    subjectSelected.getCriterias().add(new Criteria(name, Float.valueOf(value)));
+                    MainActivity.subjects.get(subjectIndex).getCriterias().add(new Criteria(name, Float.valueOf(value)));
+                    //subjectSelected.getCriterias().add(new Criteria(name, Float.valueOf(value)));
                     criteriaAdapter.notifyDataSetChanged();
                     setAverage();
 
                     Toast.makeText(SubjectActivity.this, R.string.criterion_added_toast, Toast.LENGTH_SHORT).show();
+                    saveContent();
                     return;
 
                 }catch (NumberFormatException e){
@@ -282,33 +306,15 @@ public class SubjectActivity extends Activity {
 
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        /**
-         * Back button press action
-         * Return the object selected
-         */
-        if ((keyCode == KeyEvent.KEYCODE_BACK))
-        {
-            Intent returnObject = new Intent();
-            returnObject.putExtra("OBJECT", subjectSelected);
-            setResult(RESULT_OK, returnObject);
-            finish();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         /**
          * Gets the selected object and replace it on the list to save modifications
          */
-        super.onActivityResult(requestCode, resultCode, data);
 
-        Criteria criteria = (Criteria) data.getSerializableExtra("OBJECT");
 
         //Updates the subject in the list
-        subjectSelected.getCriterias().set(auxIndex, criteria);
         criteriaAdapter.notifyDataSetChanged();
 
         //Gets the average TextView for the selected element
@@ -319,7 +325,7 @@ public class SubjectActivity extends Activity {
         df.setRoundingMode(RoundingMode.CEILING);
 
         //Updates TextView
-        points.setText(df.format( criteria.getPoints()));
+        points.setText(df.format( MainActivity.subjects.get(subjectIndex).getCriterias().get(auxIndex).getPoints()));
 
         //Updates total average
         setAverage();
@@ -337,5 +343,17 @@ public class SubjectActivity extends Activity {
             final int childIndex = pos - firstListItemPosition;
             return listView.getChildAt(childIndex);
         }
+    }
+
+    void saveContent() {
+
+        SharedPreferences appSharedPrefs  = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(MainActivity.subjects);
+
+        prefsEditor.putString("Subjects", json);
+        prefsEditor.commit();
     }
 }

@@ -3,9 +3,12 @@ package com.co.aaron.grademanager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,9 +17,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by aaron
@@ -28,10 +36,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<Subject> subjects;    // list of subjects
+    static  ArrayList<Subject> subjects;    // list of subjects
 
     private ListView subjectListView;       // ListView for subjects
-    private  SubjectAdapter subjectAdapter; // Adapter for subjects
+    private SubjectAdapter subjectAdapter; // Adapter for subjects
 
     private int auxIndex;                   //aux index
 
@@ -40,10 +48,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        subjects = new ArrayList<Subject>();
+       // subjects = new ArrayList<Subject>();
 
         //Get subject for testing !!!
         //subjects = test();
+        retrieveContent();
+        Log.d("TAG", String.valueOf(subjects));
         setAverage();
 
         // Initialize the ListView and the adapter
@@ -63,9 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent sendSubject = new Intent(MainActivity.this, SubjectActivity.class);
 
-                Subject subject =  subjects.get(i);
-
-                sendSubject.putExtra("SUBJECT", subject);
+                sendSubject.putExtra("SUBJECT_INDEX", i);
 
                 startActivityForResult(sendSubject, result);
 
@@ -111,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                         subjects.get(auxIndex).setName(newSubjectName.getText().toString());
                         subjectAdapter.notifyDataSetChanged();
                         Toast.makeText(MainActivity.this, R.string.name_changed_toast, Toast.LENGTH_SHORT).show();
+                        saveContent();
                         return;
                     }
                 });
@@ -180,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 setAverage();
 
                 Toast.makeText(MainActivity.this, R.string.subject_added_toast, Toast.LENGTH_SHORT).show();
+                saveContent();
                 return;
             }
         });
@@ -227,14 +237,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         /**
-         * Gets the selected object and replace it on the list to save modifications
+         * Updates the average for the selected subject and the total average
          */
         super.onActivityResult(requestCode, resultCode, data);
 
-        Subject subject = (Subject) data.getSerializableExtra("OBJECT");
-
-        //Updates the subject in the list
-        subjects.set(auxIndex, subject);
+        //Updates adapterView
         subjectAdapter.notifyDataSetChanged();
 
         //Gets the average TextView for the selected element
@@ -245,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         df.setRoundingMode(RoundingMode.CEILING);
 
         //Updates TextView
-        average.setText(df.format( subject.getAverage()));
+        average.setText(df.format( subjects.get(auxIndex).getAverage()));
 
         //Updates total average
         setAverage();
@@ -280,5 +287,39 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return list;
+    }
+
+    void saveContent() {
+
+        SharedPreferences appSharedPrefs  = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(this.subjects);
+
+        prefsEditor.putString("Subjects", json);
+        prefsEditor.commit();
+    }
+
+    void retrieveContent() {
+        SharedPreferences appSharedPrefs  = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Subject>>(){}.getType();
+
+        String json = appSharedPrefs.getString("Subjects", "");
+        Log.d("TAG", json);
+
+        subjects = gson.fromJson(json, type);
+
+        if (subjects == null){
+            subjects = new ArrayList<Subject>();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        saveContent();
+        super.onPause();
     }
 }
