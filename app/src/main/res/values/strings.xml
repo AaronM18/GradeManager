@@ -4,6 +4,8 @@
 
     <!-- Activity Main -->
     <string name="average_text_view">Average:</string>
+    <string name="subject_label_text_view">Subject</string>
+    <string name="grade_label_text_view">Grade</string>
 
     <!-- Add Subject -->
     <string name="create_subject_text_view">Enter de name of the new subject:</string>
@@ -30,6 +32,8 @@
     <string name="points_text_view">Points</string>
     <string name="criterion_text_view">Criterion</string>
     <string name="modify_criterion_title_dialog">Modify Criterion</string>
+    <string name="subject_name_text_view">Subject Name</string>
+
 
     <!-- Add Criterion -->
     <string name="create_criterion_title_dialog">Create Criterion</string>
@@ -42,8 +46,11 @@
 
     <!-- Criteria Detail(Activity 3) -->
     <string name="number_of_assignments_text_view">Number of assignments:</string>
-    <string name="criteria_value_text_view">Criteria value:</string>
-
+    <string name="criteria_value_text_view">Criterion value:</string>
+    <string name="total_points_text_view">Points:</string>
+    <string name="delivery_date_label">Delivery Date</string>
+    <string name="grade_label">Grade</string>
+    <string name="assignment_label">Assignment</string>
 
     <!-- Add Assignment -->
     <string name="create_assignment_title_dialog">Create Assignment</string>
@@ -62,6 +69,11 @@
     <string name="enter_grade_toast">Enter a grade</string>
     <string name="assignment_deleted_toast">Assignment deleted</string>
     <string name="date_tex_view">Date:</string>
+
+
+    <!-- General Labels -->
+    <string name="add_button_label">+</string>
+    <string name="empty_average_text_view">00.00</string>
 
 
 </resources>
