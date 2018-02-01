@@ -1,0 +1,79 @@
+<resources>
+    <!-- App name -->
+    <string name="app_name">Grade Manager</string>
+
+    <!-- Activity Main -->
+    <string name="average_text_view">Promedio:</string>
+    <string name="subject_label_text_view">Materia</string>
+    <string name="grade_label_text_view">Calificación</string>
+
+    <!-- Add Subject -->
+    <string name="create_subject_text_view">Introduce el nomrbe de la nueva materia:</string>
+    <string name="new_subject_name_hint">Nombre</string>
+    <string name="create_subject_dialog_title">Crear materia</string>
+    <string name="valid_value_toast">Introduce un valor decimal valido</string>
+
+    <!-- Modify Subject -->
+    <string name="new_name_subject_edit_text_view">Nuevo nombre</string>
+    <string name="modify_subject_title_dialog">Modificar Materia</string>
+    <string name="enter_name_toast">Introduce un nombre</string>
+    <string name="name_changed_toast">Nombre actualizado</string>
+    <string name="subject_deleted_toast">Materia eliminada</string>
+    <string name="delete_button_dialog">Eliminar</string>
+    <string name="save_button_dialog">Guardar</string>
+    <string name="create_button_dialog">Crear</string>
+    <string name="error_subject_creation_toast">Error: materia no creada</string>
+    <string name="subject_added_toast">Materia agregada!</string>
+    <string name="cancel_button_dialog">Cancelar</string>
+    <string name="name_text_view">Nombre:</string>
+
+    <!-- Subject detail(activity 2) -->
+    <string name="value_text_view">% Valor</string>
+    <string name="points_text_view">Puntos</string>
+    <string name="criterion_text_view">Criterio</string>
+    <string name="modify_criterion_title_dialog">Modificar Criterio</string>
+    <string name="subject_name_text_view">Nombre de materia</string>
+
+
+    <!-- Add Criterion -->
+    <string name="create_criterion_title_dialog">Crear Criterio</string>
+    <string name="error_criterion_creation_toast">Error: Criterio no creado</string>
+    <string name="enter_value_toast">Introduce un valor de porcentaje</string>
+    <string name="criterion_added_toast">Criterio agregado</string>
+
+    <!-- Modify Criterion -->
+    <string name="value_modify_text_view">Valor:</string>
+
+    <!-- Criteria Detail(Activity 3) -->
+    <string name="number_of_assignments_text_view">Numero de entregables:</string>
+    <string name="criteria_value_text_view">Valor de criterio:</string>
+    <string name="total_points_text_view">Puntos:</string>
+    <string name="delivery_date_label">Fecha de entrega</string>
+    <string name="grade_label">Calificación</string>
+    <string name="assignment_label">Entregable</string>
+
+    <!-- Add Assignment -->
+    <string name="create_assignment_title_dialog">Crear Entregable</string>
+    <string name="grade_hint_edit_text">Calificación</string>
+    <string name="add_assignment_text_view">Introduce un nombre y fecha de entrega:</string>
+    <string name="error_assignment_toast">Error al crear entregable</string>
+    <string name="enter_date_toast">Introduce una fecha</string>
+    <string name="assignment_created_toast">Entregable creado</string>
+    <string name="valid_grade_toast">Introduce una calificación válida</string>
+    <string name="delivery_date_hint">Fecha de entrega</string>
+
+    <!-- Modify Assignment -->
+    <string name="modify_assignment_title_dialog">Modificar Entregable</string>
+    <string name="grade_text_view">Calificación:</string>
+    <string name="valid_assignment_grade_toast">Introduce una calificación válida</string>
+    <string name="enter_grade_toast">Introduce una calificación</string>
+    <string name="assignment_deleted_toast">Entregable eliminado</string>
+    <string name="date_tex_view">Fecha:</string>
+
+
+    <!-- General Labels -->
+    <string name="add_button_label">+</string>
+    <string name="empty_average_text_view">00.00</string>
+
+
+</resources>

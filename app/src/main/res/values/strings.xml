@@ -40,9 +40,9 @@
     <string name="error_criterion_creation_toast">Error: Criterion not created</string>
     <string name="enter_value_toast">Enter a percentage value</string>
     <string name="criterion_added_toast">Criterion added</string>
-    <string name="value_modify_text_view">Value:</string>
 
     <!-- Modify Criterion -->
+    <string name="value_modify_text_view">Value:</string>
 
     <!-- Criteria Detail(Activity 3) -->
     <string name="number_of_assignments_text_view">Number of assignments:</string>

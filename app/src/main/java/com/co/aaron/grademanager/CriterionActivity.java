@@ -135,7 +135,7 @@ public class CriterionActivity extends Activity {
                         }, year, month, day);
 
                         Calendar cal  = Calendar.getInstance();
-                        cal.add(Calendar.MONTH, -6);
+                        cal.add(Calendar.MONTH, -4);
                         datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
 
                         datePickerDialog.show();
@@ -259,7 +259,7 @@ public class CriterionActivity extends Activity {
                 }, year, month, day);
 
                 Calendar cal  = Calendar.getInstance();
-                cal.add(Calendar.MONTH, -6);
+                cal.add(Calendar.MONTH, -4);
                 datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
 
                 datePickerDialog.show();
