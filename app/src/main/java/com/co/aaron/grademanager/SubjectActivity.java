@@ -287,6 +287,7 @@ public class SubjectActivity extends Activity {
 
         if (subjectSelected.getCriterias().size() == 0) {
             averageTextView  = findViewById(R.id.subject_avg_text_view);
+            subjectSelected.setAverage(00.00f);
             averageTextView.setText("00.00");
             return;
         }
@@ -315,7 +316,7 @@ public class SubjectActivity extends Activity {
          * Gets the selected object and replace it on the list to save modifications
          */
 
-        
+
         //Updates the subject in the list
         criteriaAdapter.notifyDataSetChanged();
 
