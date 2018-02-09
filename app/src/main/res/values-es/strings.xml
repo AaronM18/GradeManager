@@ -69,6 +69,7 @@
     <string name="enter_grade_toast">Introduce una calificación</string>
     <string name="assignment_deleted_toast">Entregable eliminado</string>
     <string name="date_tex_view">Fecha:</string>
+    <string name="date_error_toast">Formato de fecha inválido</string>
 
 
     <!-- General Labels -->

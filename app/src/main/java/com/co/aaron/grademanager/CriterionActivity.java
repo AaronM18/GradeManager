@@ -25,8 +25,10 @@ import com.google.gson.Gson;
 import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by aaron on 27/12/2017.
@@ -93,7 +95,7 @@ public class CriterionActivity extends Activity {
                 auxIndex  = i;  //Saves the index of the selected element for later use
 
                 //Defines float format
-                DecimalFormat df = new DecimalFormat("#.###");
+                final DecimalFormat df = new DecimalFormat("#.###");
                 df.setRoundingMode(RoundingMode.CEILING);
 
                 //Initialize Dialog
@@ -121,25 +123,50 @@ public class CriterionActivity extends Activity {
                 setDateText.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String[] date = selectedAssignment.getDeliverDate().split("/");
-                        final int year = Integer.valueOf(date[2]);
-                        final int month = Integer.valueOf(date[1]);
-                        final int day = Integer.valueOf(date[0]);
+                        try {
+                            //Gets the date saved so the calendar is init there
+                            String[] date = selectedAssignment.getDeliverDate().split("/");
+                            final int year = Integer.valueOf(date[2]);
+                            final int month = Integer.valueOf(date[1]);
+                            final int day = Integer.valueOf(date[0]);
 
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(CriterionActivity.this, new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                                String date = i2 + "/" + i1 + "/" + i;
-                                setDateText.setText(date);
-                            }
-                        }, year, month, day);
+                            DatePickerDialog datePickerDialog = new DatePickerDialog(CriterionActivity.this, new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                                    String date = i2 + "/" + i1 + "/" + i;
+                                    setDateText.setText(date);
+                                }
+                            }, year, month, day);
 
-                        Calendar cal  = Calendar.getInstance();
-                        cal.add(Calendar.MONTH, -4);
-                        datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+                            Calendar cal = Calendar.getInstance();
+                            cal.add(Calendar.MONTH, -4);
+                            datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
 
-                        datePickerDialog.show();
+                            datePickerDialog.show();
+                        }catch (NumberFormatException e){
 
+                            //Exception validates date format, if invalid, min date on calendar is shown
+                            Date today = new Date(); // current date
+                            Calendar cal = Calendar.getInstance();
+                            cal.setTime(today);
+
+
+                            Toast.makeText(CriterionActivity.this, R.string.date_error_toast, Toast.LENGTH_SHORT).show();
+                            //If date was not valid
+                            DatePickerDialog datePickerDialog = new DatePickerDialog(CriterionActivity.this, new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                                    String date = i2 + "/" + i1 + "/" + i;
+                                    setDateText.setText(date);
+                                }
+                            }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+
+                            //Calendar cal = Calendar.getInstance();
+                            cal.add(Calendar.MONTH, -4);
+                            datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+
+                            datePickerDialog.show();
+                        }
                     }
                 });
 
@@ -211,6 +238,9 @@ public class CriterionActivity extends Activity {
                         assignmentAdapter.notifyDataSetChanged();
                         Toast.makeText(CriterionActivity.this, R.string.assignment_deleted_toast, Toast.LENGTH_SHORT).show();
                         updatePoints();
+
+                        TextView numberOfAssignments = findViewById(R.id.number_assignments_text_view);
+                        numberOfAssignments.setText(String.valueOf(criteriaSelected.getAssignments().size()));
                         saveContent();
 
                     }
@@ -248,18 +278,17 @@ public class CriterionActivity extends Activity {
         //DatePicker dialog from date edit text
         assignmentDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                final int year = 2000;
-                final int month = 1;
-                final int day = 1;
+                Date today = new Date(); // current date
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(today);
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(CriterionActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         assignmentDate.setText(i2 + "/" + i1 + "/" + i);
                     }
-                }, year, month, day);
+                }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 
-                Calendar cal  = Calendar.getInstance();
                 cal.add(Calendar.MONTH, -4);
                 datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
 
@@ -315,7 +344,7 @@ public class CriterionActivity extends Activity {
                     updatePoints();
 
                     //Updates number of assignments
-                    TextView pointsTextView = (TextView) findViewById(R.id.number_assignments_text_view);
+                    TextView pointsTextView = findViewById(R.id.number_assignments_text_view);
                     pointsTextView.setText(String.valueOf(criteriaSelected.getAssignments().size()));
 
                     Toast.makeText(CriterionActivity.this, R.string.assignment_created_toast, Toast.LENGTH_SHORT).show();
@@ -342,7 +371,7 @@ public class CriterionActivity extends Activity {
         if (criteriaSelected.getAssignments().size() == 0) {
             pointsTextView  = findViewById(R.id.criteria_points_text_view);
             criteriaSelected.setPoints();
-            pointsTextView.setText("00.00");
+            pointsTextView.setText(R.string.empty_average_text_view);
             return;
         }
 

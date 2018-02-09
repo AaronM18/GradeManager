@@ -69,6 +69,7 @@
     <string name="enter_grade_toast">Enter a grade</string>
     <string name="assignment_deleted_toast">Assignment deleted</string>
     <string name="date_tex_view">Date:</string>
+    <string name="date_error_toast">Date format was not valid</string>
 
 
     <!-- General Labels -->
