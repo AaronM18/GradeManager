@@ -210,6 +210,7 @@ public class CriterionActivity extends Activity {
                         criteriaSelected.getAssignments().remove(auxIndex);
                         assignmentAdapter.notifyDataSetChanged();
                         Toast.makeText(CriterionActivity.this, R.string.assignment_deleted_toast, Toast.LENGTH_SHORT).show();
+                        updatePoints();
                         saveContent();
 
                     }
@@ -340,6 +341,7 @@ public class CriterionActivity extends Activity {
 
         if (criteriaSelected.getAssignments().size() == 0) {
             pointsTextView  = findViewById(R.id.criteria_points_text_view);
+            criteriaSelected.setPoints();
             pointsTextView.setText("00.00");
             return;
         }

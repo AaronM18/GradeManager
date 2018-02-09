@@ -93,7 +93,10 @@
         android:layout_width="match_parent"
         android:layout_height="62dp"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+
+        android:background="@color/colorPrimary"
+        android:elevation="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,7 +107,7 @@
 
             android:text="@string/average_text_view"
             android:textSize="18sp"
-            android:textColor="#000000"/>
+            android:textColor="@color/lightText"/>
 
         <TextView
             android:id="@+id/subject_avg_text_view"
@@ -117,7 +120,7 @@
 
             android:text="@string/empty_average_text_view"
             android:textSize="18sp"
-            android:textColor="#000000"/>
+            android:textColor="@color/lightText"/>
 
         <Button
             android:id="@+id/add_criteria_button"

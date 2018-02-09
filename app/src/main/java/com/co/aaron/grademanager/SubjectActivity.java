@@ -183,6 +183,8 @@ public class SubjectActivity extends Activity {
                         MainActivity.subjects.get(subjectIndex).getCriterias().remove(auxIndex);
                         criteriaAdapter.notifyDataSetChanged();
                         Toast.makeText(SubjectActivity.this, R.string.subject_deleted_toast, Toast.LENGTH_SHORT).show();
+                        setAverage();
+                        saveContent();
                     }
                 });
 
@@ -313,7 +315,7 @@ public class SubjectActivity extends Activity {
          * Gets the selected object and replace it on the list to save modifications
          */
 
-
+        
         //Updates the subject in the list
         criteriaAdapter.notifyDataSetChanged();
 

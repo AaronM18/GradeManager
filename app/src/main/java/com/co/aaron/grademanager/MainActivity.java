@@ -214,6 +214,8 @@ public class MainActivity extends AppCompatActivity {
         final TextView averageTextView;
 
         if (subjects.size() == 0) {
+            averageTextView  = findViewById(R.id.avgf_text_view);
+            averageTextView.setText("00.00");
             return;
         }
 
