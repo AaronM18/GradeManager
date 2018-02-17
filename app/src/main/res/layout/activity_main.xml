@@ -97,7 +97,11 @@
             android:layout_margin="10dp"
 
             android:text="@string/add_button_label"
-            android:textSize="18sp"/>
+            android:textColor="@color/lightText"
+            android:textSize="18sp"
+
+            android:background="@drawable/roundedbutton"
+            android:elevation="5dp"/>
 
     </LinearLayout>
 

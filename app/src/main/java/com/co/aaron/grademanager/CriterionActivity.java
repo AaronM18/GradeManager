@@ -127,13 +127,13 @@ public class CriterionActivity extends Activity {
                             //Gets the date saved so the calendar is init there
                             String[] date = selectedAssignment.getDeliverDate().split("/");
                             final int year = Integer.valueOf(date[2]);
-                            final int month = Integer.valueOf(date[1]);
+                            final int month = Integer.valueOf(date[1])-1;
                             final int day = Integer.valueOf(date[0]);
 
                             DatePickerDialog datePickerDialog = new DatePickerDialog(CriterionActivity.this, new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                                    String date = i2 + "/" + i1 + "/" + i;
+                                    String date = i2 + "/" + (i1+1) + "/" + i;
                                     setDateText.setText(date);
                                 }
                             }, year, month, day);
@@ -143,6 +143,7 @@ public class CriterionActivity extends Activity {
                             datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
 
                             datePickerDialog.show();
+
                         }catch (NumberFormatException e){
 
                             //Exception validates date format, if invalid, min date on calendar is shown
@@ -156,7 +157,7 @@ public class CriterionActivity extends Activity {
                             DatePickerDialog datePickerDialog = new DatePickerDialog(CriterionActivity.this, new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                                    String date = i2 + "/" + i1 + "/" + i;
+                                    String date = i2 + "/" + (i1+1) + "/" + i;
                                     setDateText.setText(date);
                                 }
                             }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
@@ -285,7 +286,7 @@ public class CriterionActivity extends Activity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(CriterionActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        assignmentDate.setText(i2 + "/" + i1 + "/" + i);
+                        assignmentDate.setText(i2 + "/" + (i1+1) + "/" + i);
                     }
                 }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 

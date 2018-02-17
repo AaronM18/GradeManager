@@ -164,7 +164,7 @@
     <ListView
         android:id="@+id/assignment_list_view"
         android:layout_width="match_parent"
-        android:layout_height="360dp">
+        android:layout_height="355dp">
 
     </ListView>
 
@@ -217,7 +217,10 @@
 
             android:text="@string/add_button_label"
             android:textSize="18sp"
-            tools:ignore="OnClick" />
+            tools:ignore="OnClick"
+            android:textColor="@color/lightText"
+
+            android:background="@drawable/roundedbutton"/>
 
     </LinearLayout>
 
