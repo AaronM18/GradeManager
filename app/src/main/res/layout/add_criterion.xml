@@ -16,7 +16,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
 
-        android:text="Enter the name and percentage value"
+        android:text="@string/enter_the_name_and_percentage_value_add_criterion_text_view"
         android:textSize="18sp"
         android:textColor="#000000"
         android:gravity="center" />
@@ -26,6 +26,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="start"
 
         android:padding="10dp"
         android:layout_marginLeft="40dp"
@@ -34,7 +35,7 @@
         android:layout_marginBottom="20dp"
 
         android:hint="@string/new_subject_name_hint"
-        android:gravity="left"/>
+        android:inputType="textCapSentences" />
 
     <EditText
         android:id="@+id/criterion_value_edit_text"

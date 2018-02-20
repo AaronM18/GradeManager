@@ -37,7 +37,8 @@
         android:layout_marginBottom="20dp"
 
         android:hint="@string/new_subject_name_hint"
-        android:gravity="left"/>
+        android:gravity="start"
+        android:inputType="textCapSentences"/>
 
 
 

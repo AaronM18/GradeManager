@@ -32,7 +32,8 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="15dp"
 
-        android:hint="@string/name_text_view"/>
+        android:hint="@string/name_text_view"
+        android:inputType="textCapSentences"/>
 
     <EditText
         android:id="@+id/assignment_grade_text_view"

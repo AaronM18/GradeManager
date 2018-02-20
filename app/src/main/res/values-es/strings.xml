@@ -40,6 +40,7 @@
     <string name="error_criterion_creation_toast">Error: Criterio no creado</string>
     <string name="enter_value_toast">Introduce un valor de porcentaje</string>
     <string name="criterion_added_toast">Criterio agregado</string>
+    <string name="enter_the_name_and_percentage_value_add_criterion_text_view">Ingresa un nombre y valor de porcentaje</string>
 
     <!-- Modify Criterion -->
     <string name="value_modify_text_view">Valor:</string>
