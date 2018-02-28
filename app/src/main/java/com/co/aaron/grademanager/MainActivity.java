@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         subjectAdapter = new SubjectAdapter(this, subjects);
         subjectListView = findViewById(R.id.subject_list_view);
         subjectListView.setAdapter(subjectAdapter);
+
+        Button addButton = findViewById(R.id.add_subject_button);
 
         // Click Action for a click on an item of the list
         subjectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -140,6 +143,18 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 builder.show();
+                return true;
+            }
+        });
+
+        //Fast assignment add button
+        addButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                final int result = 1;
+                Intent createAssingment = new Intent(MainActivity.this, FastAssignmentAddActivity.class);
+
+                startActivityForResult(createAssingment, result);
                 return true;
             }
         });

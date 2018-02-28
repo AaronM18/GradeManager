@@ -17,12 +17,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SubjectActivity" >
-
+        <activity
+            android:name=".SubjectActivity" >
         </activity>
 
-        <activity android:name=".CriterionActivity">
+        <activity
+            android:name=".CriterionActivity">
+        </activity>
 
+        <activity
+            android:name=".FastAssignmentAddActivity">
         </activity>
 
     </application>
